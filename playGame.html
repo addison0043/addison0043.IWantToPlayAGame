@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>I Want to Play a Game...</title>
+
+  <link rel="stylesheet" type="text/css" href="style.css">
+
+  <!-- JQuery -->
+  <script src="https://code.jquery.com/jquery.js"></script>
+
+  <!-- Java -->
+  <script type="text/javascript" src="script.js"></script>
+
+ <!-- Google fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Abril+Fatface" rel="stylesheet">
+
+</head>
+<body class="start">
+
+  <h1>I Want to Play a Game...</h1>
+
+  <h2 id="subtext">Click to continue...</h2>
+
+  <section id="ceiling">
+
+      <div id="quest_display"><span id="quest_text"></span></div>  
+
+    <!-- CSS Grid -->
+    <container id="quest_contain">
+
+        <!--Gifs and imgs populate here  -->
+        <div id="giph"></div>
+
+        <!-- Current score tracked here -->
+        <div id="score_bar">	
+  				<p>Current<br>Score:<br><span id="yes_correct"></span><span id="total_questions_asked"></span>
+  				<br>
+  				<br>
+  				<span id="show_time"></span>
+        </div>
+
+        <!-- Selections populate here -->
+        <div id="select1" class="selections"><span id="choice1"></span></div>
+        <div id="select2" class="selections"><span id="choice2"></span></div>
+        <div id="select3" class="selections"><span id="choice3"></span></div>
+        <div id="select4" class="selections"><span id="choice4"></span></div>           
+
+    </container>
+    <!-- End CSS Grid -->
+
+  </section>
+
+
+</body>
+</html>
