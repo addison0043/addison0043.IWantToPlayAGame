@@ -1,8 +1,8 @@
 var score;
 var quest = ["Q1", "Q2", "Q3", "Q4", "Q5", "Q6", "Q7", "Q8", "Q9", "Q10", "Q11", "Q12", "Q13", "Q14", "Q15", "Q16"];
 var rand;
-var jigsaw_laugh = new Audio("Assets/laugh.wav");
-var theme_music = new Audio("Assets/Saw_Movie.mp3");
+var jigsaw_laugh = new Audio("File/laugh.wav");
+var theme_music = new Audio("File/Saw_Movie.mp3");
 var correct_answers = 0;
 var total_questions = 0;
 var timer;
@@ -17,11 +17,11 @@ var openingText = [
 ];
 
 var openingGif = [
-	"Assets/play_game.gif",
-	"Assets/trapped.gif",
-	"Assets/trapped.gif",
-	"Assets/static.gif",
-	"Assets/good_luck.jpg"
+	"File/play_game.gif",
+	"File/trapped.gif",
+	"File/trapped.gif",
+	"File/static.gif",
+	"File/good_luck.jpg"
 ]
 
 var questions = [
@@ -259,7 +259,7 @@ function wrong() {
 		hide_select();
 		$("#giph").show();
 	 	$("#quest_text").text("Incorrect");
-	 	$("#giph").html("Assets/shake_head_no.gif");
+	 	$("#giph").html("File/shake_head_no.gif");
 		$('body').on("click", choose_question);
 	}
 }
@@ -296,7 +296,7 @@ function times_up() {
 	$("#yes_correct").text(correct_answers + " / ");
 	$("#total_questions_asked").text(total_questions);
  	$("#giph").show();
- 	$("#giph").html('<img src="Assets/times_up.jpg"/>');
+ 	$("#giph").html('<img src="File/times_up.jpg"/>');
  	$('body').on("click", choose_question);
 }
 
@@ -321,13 +321,13 @@ function results() {
 	$("#quest_text").html(correct_answers + " / " + total_questions);
 
 		if (correct_answers > 1) {
-			$("#giph").html('<img src="Assets/released.gif">');
+			$("#giph").html('<img src="File/released.gif">');
 			$("#quest_text").text("Most people are so ungrateful to be alive, but not you, not any more...");
 		}
 
 		else {
 			jigsaw_laugh.play();
-			$("#giph").html('<img src="Assets/smile.gif"/>');
+			$("#giph").html('<img src="File/smile.gif"/>');
 			$("#quest_text").text("Game Over. You Lose.");
 		}
 }
