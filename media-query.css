@@ -1,0 +1,30 @@
+@media (max-width: 1075px) {
+	#ceiling {
+		grid-template-columns: auto ;
+		grid-template-rows: auto auto auto auto auto auto auto;
+	}
+	#submit {
+		grid-row: 2;
+		margin: auto;
+	}
+	#select1 {
+		grid-row: 3;	
+	}
+	#select2 {
+		grid-row: 4;
+	}
+
+	#select3 {
+		grid-row: 5;
+	}
+
+	#select4 {
+		grid-row: 6;
+	}
+	#score_bar {
+	grid-row: 7;
+	height: 200px;
+	width: 350px;
+	margin-bottom: 40px;
+	}
+}

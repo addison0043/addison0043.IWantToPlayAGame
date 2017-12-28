@@ -1,11 +1,10 @@
 var score;
-var quest = ["Q1", "Q2", "Q3", "Q4", "Q5", "Q6", "Q7", "Q8", "Q9", "Q10", "Q11", "Q12", "Q13", "Q14", "Q15", "Q16"];
-var rand;
 var jigsaw_laugh = new Audio("File/laugh.wav");
 var theme_music = new Audio("File/Saw_Movie.mp3");
 var correct_answers = 0;
 var total_questions = 0;
 var timer;
+var rand;
 var clock_running = false;
 
 var openingText = [ 
@@ -35,11 +34,11 @@ var questions = [
 	},
 	{
 	  quest: 'What is the correct JavaScript syntax to change the content of the HTML element below?',
-	  sel1: 'document.getElementByName("p").innerHTML = "Hello World!";',
+	  sel1: 'document.getElementByName("p") .innerHTML = "Hello World!";',
 	  sel2:'#demo.innerHTML = "Hello World!";',
-	  sel3: 'document.getElement("p").innerHTML = "Hello World!";',
-	  sel4:'document.getElementById("demo").innerHTML = "Hello World!";',
-	  correctAnswer: 'document.getElementById("demo").innerHTML = "Hello World!";'
+	  sel3: 'document.getElement("p") .innerHTML = "Hello World!";',
+	  sel4:'document.getElementById("demo") .innerHTML = "Hello World!";',
+	  correctAnswer: 'document.getElementById("demo") .innerHTML = "Hello World!";'
 	},
 	{
 	  quest: "How do you create a function in JavaScript?",
@@ -91,11 +90,11 @@ var questions = [
 	},
 	{
 	  quest: "What is the correct jQuery code to set the background color of all p elements to red?",
-	  sel1: '$("p").layout("background-color","red");',
-	  sel2: '$("p").manipulate("background-color","red");',
-	  sel3: '$("p").css("background-color","red");',
-	  sel4: '$("p").style("background-color","red");',
-	  correctAnswer: '$("p").css("background-color","red");'
+	  sel1: '$("p").layout("background-color", "red");',
+	  sel2: '$("p").manipulate("background-color", "red");',
+	  sel3: '$("p").css("background-color", "red");',
+	  sel4: '$("p").style("background-color", "red");',
+	  correctAnswer: '$("p").css("background-color", "red");'
 	},
 	{
 	  quest: 'With jQuery, look at the following selector: $("div.intro"). What does it select?',
@@ -148,14 +147,14 @@ var questions = [
 ];
 
 window.onload = function start_game() {
-	hide_select();
-	$("#score_bar").hide();
+	$("#ceiling").hide();
+	$("#ceiling2").hide();
 	theme_music.play();
 	$("body").on("click", intro);
 }
 
-function intro() {
-	
+function intro() {	
+	$("#ceiling2").show();
 	$("#quest_text").html(openingText[0]);
 	openingText.splice(0, 1);
 	console.log(openingText);
@@ -169,12 +168,11 @@ function intro() {
 		}
 }
 
+function choose_question(){
 
-function choose_question(rand){
-
-	show_select();
-	$("#giph").hide();
-	$("#score_bar").show();
+	$('.selections').removeClass('redBorder');
+	$("#ceiling").show();
+	$("#ceiling2").hide();
 	$("#subtext").html("");
 
 	rand = Math.floor(Math.random() * questions.length) -1;
@@ -185,11 +183,10 @@ function choose_question(rand){
 	questions.splice(rand, 1);
 	console.log(questions);
 	
-
-	timer = 11;
-	reset_timer();
-	clock_running = true;
-	run_timer();
+	// timer = 11;
+	// reset_timer();
+	// clock_running = true;
+	// run_timer();
 
 	$("#quest_text").text(questions[rand].quest);
  	$("#choice1").text(questions[rand].sel1);
@@ -197,39 +194,38 @@ function choose_question(rand){
  	$("#choice3").text(questions[rand].sel3);
  	$("#choice4").text(questions[rand].sel4);
 
- 		if (questions[rand].sel1 === questions[rand].correctAnswer) {
- 			$('#select1').on("click", correct);
- 		}
- 		else {
- 			$('#select1').on("click", wrong);
- 		}
+ 	$('.selections').click(function() {
+		
+		if ($(this).hasClass('redBorder')) {
+			$(this).removeClass('redBorder');
+		}
+		else {
+			$(this).addClass('redBorder').siblings().removeClass('redBorder');
+		}
+	});
 
- 		if (questions[rand].sel2 === questions[rand].correctAnswer) {
- 			$('#select2').on("click", correct);
- 		}
- 		else {
- 			$('#select2').on("click", wrong);
- 		}
+	$('#submit').click(function() {
+		submit();
+	});
+}
 
- 		if (questions[rand].sel3 === questions[rand].correctAnswer) {
- 			$('#select3').on("click", correct);
- 		}
- 		else {
- 			$('#select3').on("click", wrong);
- 		}
+function submit() {
 
- 		if (questions[rand].sel4 === questions[rand].correctAnswer) {
- 			$('#select4').on("click", correct);
- 		}
- 		else {
- 			$('#select4').on("click", wrong);
- 		}	
+	var finalAnswer = document.querySelector(".redBorder").innerText;
+ 	console.log("Final Answer: " + finalAnswer);
+
+	if (finalAnswer === questions[rand].correctAnswer) {
+		correct();
+	}
+
+	else {
+		wrong();
+	}
 
 }
 
-
 function correct() {
-	stop_timer();
+	// stop_timer();
 	correct_answers ++;
 	$("#yes_correct").text(correct_answers + " / ");
 	console.log(correct_answers + " got itt.");
@@ -240,12 +236,13 @@ function correct() {
 		choose_question();
 	}
 	else if (questions.length === 0) {
+		console.log("No questions left.");
 		results();
 	}
 }
 
 function wrong() {
-	stop_timer();
+	// stop_timer();
 	total_questions ++;
 	$("#yes_correct").text(correct_answers + " / ");
 	$("#total_questions_asked").text(total_questions);
@@ -253,71 +250,60 @@ function wrong() {
 	jigsaw_laugh.play();
 
 	if (questions.length === 0) {
+		console.log("No questions left.");
 		results();
 	}
 	else {
-		hide_select();
-		$("#giph").show();
+		$("#ceiling").hide();
+		$("#ceiling2").show();
 	 	$("#quest_text").text("Incorrect");
 	 	$("#giph").html("File/shake_head_no.gif");
 		$('body').on("click", choose_question);
 	}
 }
 
-var my_interval = setInterval(function(){ run_timer() }, 1000);
+// var my_interval = setInterval(function(){ run_timer() }, 1000);
 
-function run_timer() {
+// function run_timer() {
 
-		if (clock_running === true) {
-			timer--;
-			$("#show_time").text(timer);
-		}
+// 		if (clock_running === true) {
+// 			timer--;
+// 			$("#show_time").text(timer);
+// 		}
 
-		if (timer === 0) {
-			stop_timer();
-			times_up();
-		}			
-}
+// 		if (timer === 0) {
+// 			stop_timer();
+// 			times_up();
+// 		}			
+// }
 
-function reset_timer() {
-    clearInterval(run_timer);
-}
+// function reset_timer() {
+//     clearInterval(run_timer);
+// }
 
-function stop_timer() {
-	clock_running = false;
-    clearTimeout(run_timer);
-}		
+// function stop_timer() {
+// 	clock_running = false;
+//     clearTimeout(run_timer);
+// }		
 
-function times_up() {
-	jigsaw_laugh.play();
-	stop_timer();
-	hide_select();
-	total_questions ++;
-	$("#yes_correct").text(correct_answers + " / ");
-	$("#total_questions_asked").text(total_questions);
- 	$("#giph").show();
- 	$("#giph").html('<img src="File/times_up.jpg"/>');
- 	$('body').on("click", choose_question);
-}
-
-function show_select() {
-	$("#select1").show();
- 	$("#select2").show();
- 	$("#select3").show();
- 	$("#select4").show();
-}
-
-function hide_select() {
-	$("#select1").hide();
- 	$("#select2").hide();
- 	$("#select3").hide();
- 	$("#select4").hide();
-}
+// function times_up() {
+// 	jigsaw_laugh.play();
+// 	stop_timer();
+// 	$("#ceiling").hide();
+// 	$("#ceiling2").show();
+// 	$("#quest_display").html('');
+// 	total_questions ++;
+// 	$("#yes_correct").text(correct_answers + " / ");
+// 	$("#total_questions_asked").text(total_questions);
+//  	$("#giph").html('<img src="File/times_up.jpg"/>');
+//  	$('body').on("click", choose_question);
+// }
 
 function results() {
-	stop_timer();
-	hide_select();
-	$("#giph").show();
+	
+	$("#ceiling").hide();
+	$("#ceiling2").show();
+	// stop_timer();
 	$("#quest_text").html(correct_answers + " / " + total_questions);
 
 		if (correct_answers > 1) {

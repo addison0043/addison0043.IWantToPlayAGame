@@ -4,12 +4,22 @@
   <meta charset="UTF-8">
   <title>I Want to Play a Game...</title>
 
-  <link rel="stylesheet" type="text/css" href="style.css">
-
   <!-- JQuery -->
   <script src="https://code.jquery.com/jquery.js"></script>
 
-  <!-- Java -->
+  <!-- Materialize -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+  <!--  -->
+
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+  <!-- CSS -->
+  <link rel="stylesheet" type="text/css" href="media-query.css">
+  <link rel="stylesheet" type="text/css" href="style.css">
+
+  <!-- JavaScript -->
   <script type="text/javascript" src="script.js"></script>
 
  <!-- Google fonts -->
@@ -22,33 +32,56 @@
 
   <h2 id="subtext">Click to continue...</h2>
 
-  <section id="ceiling">
+  <div id="quest_display"><span id="quest_text"></span></div>  
 
-      <div id="quest_display"><span id="quest_text"></span></div>  
+  <!-- Bootstrap Container -->
+  <section class="container" id="ceiling">
 
-    <!-- CSS Grid -->
-    <container id="quest_contain">
+    <!-- Bootstrap Row -->
+    <div class="row">
 
-        <!--Gifs and imgs populate here  -->
-        <div id="giph"></div>
-
-        <!-- Current score tracked here -->
-        <div id="score_bar">	
-  				<p>Current<br>Score:<br><span id="yes_correct"></span><span id="total_questions_asked"></span>
-  				<br>
-  				<br>
-  				<span id="show_time"></span>
-        </div>
+      <!-- Current score tracked here -->
+      <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 center-block" id="score_bar">	
+				Current<br>Score:<br><span id="yes_correct"></span><span id="total_questions_asked"></span>
+				<br>
+				<span id="show_time"></span>
+      </div>
 
         <!-- Selections populate here -->
-        <div id="select1" class="selections"><span id="choice1"></span></div>
-        <div id="select2" class="selections"><span id="choice2"></span></div>
-        <div id="select3" class="selections"><span id="choice3"></span></div>
-        <div id="select4" class="selections"><span id="choice4"></span></div>           
+        <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
+          <div id="select1" class="selections"><span id="choice1"></span></div>
+          <div id="select2" class="selections"><span id="choice2"></span></div>
+          <div id="select3" class="selections"><span id="choice3"></span></div>
+          <div id="select4" class="selections"><span id="choice4"></span></div>  
+        </div> 
+        <!-- End of Selections -->
 
-    </container>
-    <!-- End CSS Grid -->
+        <!-- Nest Submit Button here -->
+        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 center-block">  
+          <button class="btn pulse" id="submit">Submit</button>        
+        </div>
+        <!-- End of Button Nest -->
 
+    </div>
+    <!-- End of Bootstrap Row -->
+
+  </section>
+  <!-- End Bootstrap Container -->
+
+  <section class="container-fluid" id="ceiling2">
+    
+      <!-- Bootstrap Row -->
+      <div class="row">
+
+          <!--Gifs and imgs populate here  -->
+          <div class="offset-lg-3 offset-md-3 offset-sm-2 offset-xs-2 col-lg-6 col-md-6 col-sm-8 col-xs-8" id="giph">
+          </div>
+          <!-- End of Gifs -->
+        
+
+      </div>
+      <!-- End of Bootstrap Row -->
+  
   </section>
 
 
