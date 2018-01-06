@@ -232,13 +232,14 @@ function correct() {
 	total_questions ++;
 	$("#total_questions_asked").text(total_questions);
 	
-	if (questions.length > 0) {
-		choose_question();
-	}
-	else if (questions.length === 0) {
+	if (questions.length === 0) {
 		console.log("No questions left.");
 		results();
 	}
+	else {
+		console.log("Questions Left: " + questions.length);
+		choose_question();
+	}	
 }
 
 function wrong() {
@@ -253,11 +254,13 @@ function wrong() {
 		console.log("No questions left.");
 		results();
 	}
+	// This part doesn't work. GIF doesn't populate.
 	else {
 		$("#ceiling").hide();
 		$("#ceiling2").show();
 	 	$("#quest_text").text("Incorrect");
 	 	$("#giph").html("File/shake_head_no.gif");
+	 	console.log("Wrong. Questions Left: " + questions.length);
 		$('body').on("click", choose_question);
 	}
 }
