@@ -76,7 +76,7 @@ h1 {
 	#score_bar {
 		background: rgba(255,252,252, .8);
 		border-radius: 5px;
-		max-height: 400px;
+		max-height: 550px;
 		box-shadow: 2px 2px 5px #7A1111;
 		font-size: 30px;
 		font-family: 'Abril Fatface', cursive;
@@ -92,6 +92,13 @@ h1 {
 		padding: 15px;
 		font-size: 25px;
 		margin: 10px auto;
+	}
+
+	#show_time {
+		color: rgb(122,17,17);
+		font-size: 40px;
+		margin-top: 20px;
+		display: block;
 	}
 /*End of Grid 1*/
 
