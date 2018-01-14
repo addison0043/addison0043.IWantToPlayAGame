@@ -1,6 +1,7 @@
 body {
 	background-image: url(File/saw_background.png);
 	background-size: stretch;
+	background-attachment: fixed;
 	text-align: center;
 }
 
@@ -10,11 +11,13 @@ h1 {
 	font-size: 75px;
 	text-shadow: 4px 4px #7A1111;
 	color: #e2dede;
+	padding: 20px;
 }
 
 #subtext {
 	text-shadow: 3px 3px 2px #7A1111;
 	color: #e2dede;
+	padding: 0px 10px 10px 10px;
 }
 /**/
 
@@ -73,7 +76,7 @@ h1 {
 	#score_bar {
 		background: rgba(255,252,252, .8);
 		border-radius: 5px;
-		height: auto;
+		max-height: 400px;
 		box-shadow: 2px 2px 5px #7A1111;
 		font-size: 30px;
 		font-family: 'Abril Fatface', cursive;

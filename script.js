@@ -149,7 +149,7 @@ var questions = [
 window.onload = function start_game() {
 	$("#ceiling").hide();
 	$("#ceiling2").hide();
-	theme_music.play();
+	// theme_music.play();
 	$("body").on("click", intro);
 }
 
@@ -157,10 +157,10 @@ function intro() {
 	$("#ceiling2").show();
 	$("#quest_text").html(openingText[0]);
 	openingText.splice(0, 1);
-	console.log(openingText);
+	// console.log(openingText);
 	$('#giph').html("<div><img src='" + openingGif[0] + "' /></div>");
 	openingGif.splice(0, 1);
-	console.log(openingGif);
+	// console.log(openingGif);
 	
 		if (openingText.length === 0) {
 			$("body").off("click");
@@ -168,43 +168,47 @@ function intro() {
 		}
 }
 
-function choose_question(){
+function choose_question() {
+
+	// console.log("Choose question function triggered.");
 
 	$('.selections').removeClass('redBorder');
 	$("#ceiling").show();
 	$("#ceiling2").hide();
 	$("#subtext").html("");
 
-	rand = Math.floor(Math.random() * questions.length) -1;
-		if (rand === -1) {
-			rand += 1;
-		}
-	console.log("rand: " + rand);
-	questions.splice(rand, 1);
-	console.log(questions);
+		// Chooses question and removes from array
+	// rand = Math.floor(Math.random() * questions.length) -1;
+	// 	if (rand === -1) {
+	// 		rand += 1;
+	// 	}
+	// console.log("rand: " + rand);
+	
+	// console.log(questions);
 	
 	// timer = 11;
 	// reset_timer();
 	// clock_running = true;
 	// run_timer();
 
-	$("#quest_text").text(questions[rand].quest);
- 	$("#choice1").text(questions[rand].sel1);
- 	$("#choice2").text(questions[rand].sel2);
- 	$("#choice3").text(questions[rand].sel3);
- 	$("#choice4").text(questions[rand].sel4);
+		// Populate possible selections
+	$("#quest_text").text(questions[0].quest);
+ 	$("#choice1").text(questions[0].sel1);
+ 	$("#choice2").text(questions[0].sel2);
+ 	$("#choice3").text(questions[0].sel3);
+ 	$("#choice4").text(questions[0].sel4);
 
+ 	console.log("Question: " + questions[0].quest);
+ 	console.log("Answer: " + questions[0].correctAnswer)
+
+		// Apply Red Border to selection
  	$('.selections').click(function() {
 		
-		if ($(this).hasClass('redBorder')) {
-			$(this).removeClass('redBorder');
-		}
-		else {
-			$(this).addClass('redBorder').siblings().removeClass('redBorder');
-		}
+ 		$(this).addClass('redBorder').siblings().removeClass('redBorder');
 	});
 
 	$('#submit').click(function() {
+
 		submit();
 	});
 }
@@ -212,9 +216,9 @@ function choose_question(){
 function submit() {
 
 	var finalAnswer = document.querySelector(".redBorder").innerText;
- 	console.log("Final Answer: " + finalAnswer);
+ 	// console.log("Final Answer: " + finalAnswer);
 
-	if (finalAnswer === questions[rand].correctAnswer) {
+	if (finalAnswer === questions[0].correctAnswer) {
 		correct();
 	}
 
@@ -226,42 +230,53 @@ function submit() {
 
 function correct() {
 	// stop_timer();
-	correct_answers ++;
-	$("#yes_correct").text(correct_answers + " / ");
-	console.log(correct_answers + " got itt.");
-	total_questions ++;
-	$("#total_questions_asked").text(total_questions);
+
+	questions.splice(0, 1);
 	
-	if (questions.length === 0) {
-		console.log("No questions left.");
-		results();
+	correct_answers++;
+	$("#yes_correct").text(correct_answers + " / ");
+	console.log(correct_answers + " correctly answered.");
+	total_questions++;
+	$("#total_questions_asked").text(total_questions);
+	clear()
+	
+	if (questions.length > 0) {
+		// console.log("Questions Left: " + questions.length);
+		choose_question();
 	}
 	else {
-		console.log("Questions Left: " + questions.length);
-		choose_question();
+		// console.log("CORRECT. No questions left.");
+		results();
 	}	
 }
 
 function wrong() {
+
 	// stop_timer();
-	total_questions ++;
+	total_questions++;
+
+	questions.splice(0, 1);
+
 	$("#yes_correct").text(correct_answers + " / ");
 	$("#total_questions_asked").text(total_questions);
 	console.log(total_questions + " no sir.");
 	jigsaw_laugh.play();
+	console.log("Questions left: " + questions.length);
+	clear()
 
-	if (questions.length === 0) {
-		console.log("No questions left.");
-		results();
-	}
-	// This part doesn't work. GIF doesn't populate.
-	else {
+	if (questions.length > 0) {
 		$("#ceiling").hide();
 		$("#ceiling2").show();
-	 	$("#quest_text").text("Incorrect");
-	 	$("#giph").html("File/shake_head_no.gif");
-	 	console.log("Wrong. Questions Left: " + questions.length);
-		$('body').on("click", choose_question);
+		$("#quest_text").empty();
+	 	$("#quest_text").text("Incorrect. Click giph to continue.");
+	 	$("#giph").html('<img id="theImg" src="File/shake_head_no.gif" />');
+	 	// console.log("Wrong. Questions Left: " + questions.length);
+		$('#giph').on("click", choose_question);
+	}
+
+	else {
+		// console.log("WRONG. No questions left.");
+		results();
 	}
 }
 
@@ -309,14 +324,36 @@ function results() {
 	// stop_timer();
 	$("#quest_text").html(correct_answers + " / " + total_questions);
 
-		if (correct_answers > 1) {
+		if (correct_answers > 10) {
 			$("#giph").html('<img src="File/released.gif">');
 			$("#quest_text").text("Most people are so ungrateful to be alive, but not you, not any more...");
+
+				// Reset Game
+				$("#subtext").html("Click the giph to play again.");
+				$('#giph').on("click", reset);
+
 		}
 
 		else {
 			jigsaw_laugh.play();
 			$("#giph").html('<img src="File/smile.gif"/>');
 			$("#quest_text").text("Game Over. You Lose.");
+
+				// Reset Game
+				$("#subtext").html("Click the giph to play again.");
+				$('#giph').on("click", reset);
+
 		}
+}
+
+function clear() {
+	$("#quest_text").empty();
+ 	$("#choice1").empty();
+ 	$("#choice2").empty();
+ 	$("#choice3").empty();
+ 	$("#choice4").empty();
+}
+
+function reset() {
+	document.location.reload(true);
 }
