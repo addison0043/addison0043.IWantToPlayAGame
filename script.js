@@ -1,3 +1,4 @@
+// Global Variables
 var score;
 var jigsaw_laugh = new Audio("File/laugh.wav");
 var theme_music = new Audio("File/Saw_Movie.mp3");
@@ -6,7 +7,9 @@ var total_questions = 0;
 var timer;
 var rand;
 var clock_running = false;
+// End of global variables
 
+// Intro text/gifs
 var openingText = [ 
 	"Hello. I want to play a game.<br>Here's what happens if you lose...",
 	"The device you are wearing is hooked into your upper and lower jaw.<br>Think of it like a reverse bear trap.",
@@ -22,7 +25,9 @@ var openingGif = [
 	"File/static.gif",
 	"File/good_luck.jpg"
 ]
+// End of intro
 
+// Questions to answer
 var questions = [
 	{
 	  quest: "Inside which HTML element do we put the JavaScript?",
@@ -145,7 +150,9 @@ var questions = [
 	  correctAnswer: 'All p elements inside a div element'
 	}
 ];
+// End of questions
 
+// Shows Grid 1, hides Grid 2
 window.onload = function start_game() {
 	$("#ceiling").hide();
 	$("#ceiling2").hide();
@@ -153,6 +160,7 @@ window.onload = function start_game() {
 	$("body").on("click", intro);
 }
 
+// Shows intro text and gifs
 function intro() {	
 	$("#ceiling2").show();
 	$("#quest_text").html(openingText[0]);
@@ -168,12 +176,14 @@ function intro() {
 		}
 }
 
+// Questions populate from this function
 function choose_question() {
 
-		// Posts score
+	// Posts score
 	$("#yes_correct").text(correct_answers + " / ");
 	$("#total_questions_asked").text(total_questions);
 
+	// Hide Grid 1, show Grid 2
 	$('.selections').removeClass('redBorder');
 	$("#ceiling").show();
 	$("#ceiling2").hide();
@@ -201,7 +211,7 @@ function choose_question() {
  	console.log("Question: " + questions[rand].quest);
  	console.log("Answer: " + questions[rand].correctAnswer)
 
-		// Apply Red Border to selection
+	// Apply Red Border to selection. Red Border indicates user selection.
  	$('.selections').click(function() {
 		
  		$(this).addClass('redBorder').siblings().removeClass('redBorder');
@@ -212,12 +222,15 @@ function choose_question() {
 		submit();
 	});
 }
+// 
 
+// Triggered when user clicks submit button
 function submit() {
 
+	// Users answer is indicated by whichever ".selections" element has red border
 	var finalAnswer = document.querySelector(".redBorder").innerText;
- 	// console.log("Final Answer: " + finalAnswer);
 
+	// Check if answer is right or wrong
 	if (finalAnswer === questions[rand].correctAnswer) {
 		correct();
 	}
@@ -227,48 +240,61 @@ function submit() {
 	}
 
 }
+// 
 
+
+// If answer is correct..
 function correct() {
 	stop_timer();
 
+	// Remove answered question from array
 	questions.splice(rand, 1);
 	
+	// Recalibrate score
 	correct_answers++;
 	total_questions++;
 	
 	clear()
 	
+	// Choose another question if any are left
 	if (questions.length > 0) {
 
 		choose_question();
 	}
+	// If none are left, game is over
 	else {
 
 		results();
 	}	
 }
 
+// If answer is wrong..
 function wrong() {
 
+	// Remove answered question from array
 	questions.splice(rand, 1);
 
 	stop_timer();
+	// Recalibrate score
 	total_questions++;
 	jigsaw_laugh.play();
 
 	clear()
 
+	// Choose another question if any are left
 	if (questions.length > 0) {
 	
 		choose_question();
 	}
-
+	// If none are left, game is over
 	else {
 
 		results();
 	}
 }
 
+
+// Timer
 var my_interval = setInterval(function(){ run_timer() }, 1000);
 
 function run_timer() {
@@ -291,15 +317,20 @@ function reset_timer() {
 function stop_timer() {
 	clock_running = false;
     clearTimeout(run_timer);
-}		
+}
+// End of timer 
 
+
+// Show whether user lives or dies...
 function results() {
 	
+	// Hide Grid 2, show Grid 1
 	$("#ceiling").hide();
 	$("#ceiling2").show();
 	stop_timer();
 	$("#quest_text").html(correct_answers + " / " + total_questions);
 
+		// User lives
 		if (correct_answers > 10) {
 			$("#giph").html('<img src="File/released.gif">');
 			$("#quest_text").text("Most people are so ungrateful to be alive, but not you, not any more...");
@@ -310,6 +341,7 @@ function results() {
 
 		}
 
+		// User dies
 		else {
 			jigsaw_laugh.play();
 			$("#giph").html('<img src="File/smile.gif"/>');
@@ -322,6 +354,7 @@ function results() {
 		}
 }
 
+// Clears text from previous question
 function clear() {
 	$("#quest_text").empty();
  	$("#choice1").empty();
@@ -330,6 +363,7 @@ function clear() {
  	$("#choice4").empty();
 }
 
+// If user wants to play again
 function reset() {
 	document.location.reload(true);
 }
