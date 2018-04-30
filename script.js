@@ -156,7 +156,7 @@ var questions = [
 window.onload = function start_game() {
 	$("#ceiling").hide();
 	$("#ceiling2").hide();
-	// theme_music.play();
+	theme_music.play();
 	$("body").on("click", intro);
 }
 
